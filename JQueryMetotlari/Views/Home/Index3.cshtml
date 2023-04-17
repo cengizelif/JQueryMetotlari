@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Index3";
+}
+
+<h2>Index3</h2>
+
+<button id="btnYukle" class="btn btn-success">Verileri Yükle</button>
+<br />
+<br />
+<input type="text" id="veri" placeholder="veri giriniz" class="form-control" />
+<br />
+<button id="btnYukle2" class="btn btn-success">Verileri gönder ve Yükle</button>
+<hr />
+<button id="btnYukle3" class="btn btn-success">Verileri gönder ve Yükle(2)</button>
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none">
+    yükleniyor
+</div>
+
+<ul id="liste" class="list-group">
+</ul>
+
+<script>
+    $("#btnYukle").click(function () {
+        $.ajax({
+            method: "GET",
+            url: "/Home/VerileriGetir",
+            beforeSend: function () {
+                $("#liste").empty();
+                $("#loading").show(300);
+            }
+        }).done(function (sonuc) {
+            $("#liste").html(sonuc);
+        }).fail(function () {
+            alert("Hata oluştu");
+        }).always(function () { $("#loading").hide(300); });
+
+    });
+
+
+    $("#btnYukle2").click(function () {
+        var veriler = $("#veri").val();
+
+        $.ajax({
+            method: "GET",
+            url: "/Home/VerileriGetir",
+            data: { veri: veriler },
+            beforeSend: function () {
+                $("#liste").empty();
+                $("#loading").show(300);
+            }
+        }).done(function (sonuc) {
+            $("#liste").html(sonuc);
+        }).fail(function () {
+            alert("Hata oluştu");
+        }).always(function () { $("#loading").hide(300); });
+
+    });
+
+    $("#btnYukle3").click(function () {
+        var veriler = $("#veri").val();
+
+        $.ajax({
+            method: "GET",
+            url: "/Home/VerileriGetir2",
+            data: { veri: veriler },
+            beforeSend: function () {
+                $("#liste").empty();
+                $("#loading").show(300);
+            }
+        }).done(function (sonuc) {
+            //sonuc=["Teknoloji","Giyim"]
+            for (var i in sonuc) {
+                var deger = sonuc[i];
+                var li = $("<li class='list-group-item'></li>");
+                li.html(deger);
+                $("#liste").append(li);
+            }
+        }).fail(function () {
+            alert("Hata oluştu");
+        }).always(function () { $("#loading").hide(300); });
+
+    });
+
+
+</script>

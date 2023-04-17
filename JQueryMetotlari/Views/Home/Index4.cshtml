@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Index4";
+
+
+}
+
+<h2>Index4</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>AJAX ile dosya yükleme</h2>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Index4","Home",FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+            <input type="file" id="file" name="file" class="form-control" />
+            <input type="button" id="btnGonder" value="Dosya Yükle" class="btn btn-success" />
+            }
+        </div>
+    </div>
+
+</div>
+<script>
+    $(function () {
+        $("#btnGonder").click(function () {
+            /*var dosya = new FormData($("#file"));*/
+            var dosya = new FormData($("form").get(0));
+            //var dosya = new FormData($('#file')[0].files[0]);
+
+
+            console.log(dosya);
+            $.ajax({
+                method: "POST",
+                url: "/Home/DosyaYukle",
+                data: dosya,
+                processData: false,
+                contentType: false
+            }).done(function () { });
+
+        });
+    });
+   
+</script>

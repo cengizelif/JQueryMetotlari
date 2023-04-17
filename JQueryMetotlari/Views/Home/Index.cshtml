@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<button id="btnYukle" class="btn btn-success">Verileri Yükle</button>
+<br /><br />
+<input type="text" id="veri" placeholder="veri giriniz" class="form-control" />
+<br />
+<button id="btnYukle2" class="btn btn-success">Verileri gönder ve Yükle</button>
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none">
+    yükleniyor</div>
+
+<ul id="liste" class="list-group">
+    
+</ul>
+
+<script>
+    $("#btnYukle").click(function () {
+
+        $("#liste").empty();
+
+        $("#loading").show(300, function () {
+
+            $.get("/Home/VerileriGetir", function (sonuc) {
+                $("#liste").html(sonuc);
+                $("#loading").hide(300);
+            });
+
+       
+        });
+
+       
+ 
+    
+
+    });
+
+
+    $("#btnYukle2").click(function () {
+
+        $("#liste").empty();
+
+        $("#loading").show(300, function () {
+
+            var data = $("#veri").val();
+            $.get("/Home/VerileriGetir", { veri: data }, function (sonuc) {
+                $("#liste").html(sonuc);       
+            }).fail(function () { alert("Hata oluştu") }).always(function () {
+                $("#loading").hide(300);
+            });
+
+        });
+
+
+
+
+    });
+
+
+
+</script>
