@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Index6";
+}
+
+<h2>Yapılacaklar Listesi</h2>
+<hr />
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.Label("Planlanan", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("txtVeri")
+            <button class="btn btn-success" id="btnEkle">Listeye Ekle</button>
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <h3>Yapılacaklar</h3>  
+            <hr />
+            <ul id="yapilacak">
+              
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Tamamlananlar</h3> 
+            <hr />
+            <ul id="tamamlandi">
+          
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+    $("#btnEkle").click(function () {
+        
+        var veri = $("#txtVeri").val();
+        var ul1 = $("#yapilacak");
+        var ul2 = $("#tamamlandi");
+
+        if (veri != null && veri!="") {
+            var li = $("<li></li>").css("list-style-type","none");
+            var btn = $("<button class='glyphicon glyphicon-ok'></button>");
+            li.text(veri);
+            li.append(btn);
+
+            btn.click(function () {       
+                btn.hide();
+                ul2.append(li);
+            });
+
+            var btn2 = $("<button class='glyphicon glyphicon-remove'></button>");
+            li.append(btn2);
+          
+            btn2.click(function () {
+        
+                if ($(this).parent().parent()[0].attributes["id"].nodeValue == "tamamlandi") {
+                    ul1.append(li);
+                }
+                else
+                {
+                    $(this).parent().remove();             
+                }
+                btn.show();
+            });
+
+            ul1.append(li);
+        }
+        else
+        {
+            alert("Boş bırakılamaz");
+        }
+
+
+    });
+
+
+</script>

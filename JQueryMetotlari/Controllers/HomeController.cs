@@ -54,20 +54,29 @@ namespace JQueryMetotlari.Controllers
         }
 
         [HttpPost]
-        public JsonResult DosyaYukle(HttpPostedFileBase  dosya)
+        public JsonResult DosyaYukle(HttpPostedFileBase  file)
         {
-            if(dosya!=null)
+            if(file!=null)
             {
                 if(Directory.Exists(Server.MapPath("~/file"))==false)
                 {
                     Directory.CreateDirectory(Server.MapPath("~/file"));
                 }
 
-                dosya.SaveAs(Path.Combine(Server.MapPath("~/file"), dosya.FileName));
-                return Json(new { hata = false });
+                file.SaveAs(Path.Combine(Server.MapPath("~/file"), file.FileName));
+                return Json(new { hata = false , mesaj="Dosya yüklendi"});
             }
 
-            return Json(new {hata=true});
+            return Json(new {hata=true, mesaj = "Dosya yüklenemedi" });
+        }
+
+        public ActionResult Index5()
+        {
+            return View();
+        }
+        public ActionResult Index6()
+        {
+            return View();
         }
     }
 }

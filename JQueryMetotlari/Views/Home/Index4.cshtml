@@ -31,16 +31,23 @@
             /*var dosya = new FormData($("#file"));*/
             var dosya = new FormData($("form").get(0));
             //var dosya = new FormData($('#file')[0].files[0]);
-
-
-            console.log(dosya);
+        
             $.ajax({
                 method: "POST",
                 url: "/Home/DosyaYukle",
                 data: dosya,
                 processData: false,
                 contentType: false
-            }).done(function () { });
+            }).done(function (sonuc) {
+                alert(sonuc.mesaj)
+                //if (sonuc.hata) {
+                //    alert("Dosya yüklenemedi");
+                //}
+                //else
+                //{
+                //    alert("Dosya yüklendi");
+                //}
+            });
 
         });
     });
