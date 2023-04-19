@@ -78,5 +78,16 @@ namespace JQueryMetotlari.Controllers
         {
             return View();
         }
+        public ActionResult Index7()
+        {
+            return View();
+        }
+
+        static List<string> kisiler = new List<string>();
+        public JsonResult EtkinligeKatil(string ad,string email)
+        {
+            kisiler.Add(ad+" "+email);
+            return Json(kisiler,JsonRequestBehavior.AllowGet);
+        }
     }
 }

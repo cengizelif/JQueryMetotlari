@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index7";
+}
+
+<h2>Davetlisin</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.Label("Ad Soyad", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("txtAdSoyad")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("E-posta", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("txtEposta")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Katılacak mısın?", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("katilim", new[] { new SelectListItem() { Text = "Evet, katılıyorum", Value = bool.TrueString }, new SelectListItem() { Text = "Hayır, katılamıyorum", Value = bool.FalseString } })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-8 col-md-offset-2">
+            <button class="btn btn-success" id="btnGonder">Gönder</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-8 col-md-offset-2">
+            @*<h5 id="sonuc">deneme</h5>*@
+            @Html.Label(" ", new { @class = "control-label", id = "sonuc" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <h5 id="mesaj" class="active"></h5>
+    </div>
+
+    <div class="form-group" id="liste">
+
+    </div>
+</div>
+
+<script>
+    $("#btnGonder").click(function () {
+
+        $("#liste").empty();
+        var adsoyad = $("#txtAdSoyad").val();
+        var eposta = $("#txtEposta").val();
+        var katilim = $("#katilim").val();
+
+        if (katilim == "True") {
+            $.ajax({
+                method: "GET",
+                url: "/Home/EtkinligeKatil",
+                data: { ad: adsoyad, email: eposta }
+            }).done(function (sonuc) {
+                for (var i in sonuc) {
+                    var deger = sonuc[i];
+                    var btn = $("<button class='btn btn-success'></button><br/>");
+                    btn.text(deger);
+                    $("#liste").append(btn);
+                }
+            });
+
+            $("#mesaj").text("Katılımınız için teşekkürler.");
+        }
+        else
+        {
+            $("#mesaj").text("Katılamadığınız için üzgünüz.");
+        }
+        
+
+    });
+</script>
